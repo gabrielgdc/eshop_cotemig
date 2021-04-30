@@ -30,4 +30,6 @@ public class Buyer {
     public String getName() {
         return name;
     }
+
+    public void VerifyOrAddPaymentMethod(PaymentMethod paymentMethod, int orderId) {}
 }
