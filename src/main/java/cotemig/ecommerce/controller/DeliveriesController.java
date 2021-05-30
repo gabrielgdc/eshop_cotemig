@@ -1,13 +1,9 @@
 package cotemig.ecommerce.controller;
 
-import cotemig.ecommerce.commands.CreateDeliveryCommand;
 import cotemig.ecommerce.model.entities.Delivery;
 import cotemig.ecommerce.model.valueobjects.Address;
 import cotemig.ecommerce.model.viewmodels.CreateDeliveryVm;
 import cotemig.ecommerce.service.deliveryservice.DeliveryService;
-import lombok.AllArgsConstructor;
-import org.axonframework.commandhandling.SimpleCommandBus;
-import org.axonframework.commandhandling.gateway.CommandGateway;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,10 +12,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/delivery")
-@AllArgsConstructor
 public class DeliveriesController {
-
-    SimpleCommandBus bus;
 
     @Autowired
     DeliveryService deliveryService;
