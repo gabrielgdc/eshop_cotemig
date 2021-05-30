@@ -1,9 +1,6 @@
 package cotemig.ecommerce.model.entities;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class Product {
@@ -13,6 +10,10 @@ public class Product {
     private String productName;
     private Integer productUnits;
     private double unitWeight;
+
+    @ManyToOne
+    @JoinColumn(name="delivery_id", nullable=false)
+    private Delivery delivery;
 
     public Product(String productName, Integer productUnits, double unitWeight) {
         this.productName = productName;
