@@ -7,12 +7,15 @@ public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
+
     private String productName;
+
     private Integer productUnits;
+
     private double unitWeight;
 
     @ManyToOne
-    @JoinColumn(name="delivery_id", nullable=false)
+    @JoinColumn(name = "delivery_id")
     private Delivery delivery;
 
     public Product(String productName, Integer productUnits, double unitWeight) {
@@ -22,6 +25,10 @@ public class Product {
     }
 
     protected Product() {
+    }
+
+    public void setDelivery(Delivery delivery) {
+        this.delivery = delivery;
     }
 
     public Integer getId() {

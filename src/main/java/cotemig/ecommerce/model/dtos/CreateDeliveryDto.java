@@ -1,10 +1,11 @@
-package cotemig.ecommerce.model.viewmodels;
+package cotemig.ecommerce.model.dtos;
 
 import cotemig.ecommerce.model.entities.Product;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
-public class CreateDeliveryVm {
+public class CreateDeliveryDto {
     private String Cnpj;
     private String Phone;
     private String Description;
@@ -15,7 +16,7 @@ public class CreateDeliveryVm {
     private String State;
     private boolean IsDamageProneDelivery;
     private int Km;
-    private List<Product> Products;
+    private List<DeliveryProductDto> Products;
 
     public String getCnpj() {
         return Cnpj;
@@ -97,11 +98,11 @@ public class CreateDeliveryVm {
         Km = km;
     }
 
-    public List<Product> getProducts() {
+    public List<DeliveryProductDto> getProducts() {
         return Products;
     }
 
-    public void setProducts(List<Product> products) {
+    public void setProducts(List<DeliveryProductDto> products) {
         Products = products;
     }
 }

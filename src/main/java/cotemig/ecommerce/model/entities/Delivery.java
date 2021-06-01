@@ -6,6 +6,7 @@ import cotemig.ecommerce.model.exceptions.DomainException;
 import cotemig.ecommerce.model.valueobjects.Address;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -13,26 +14,38 @@ public class Delivery {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
+
     @Embedded
     private Address address;
-    @OneToMany(mappedBy = "delivery")
-    private Set<Product> deliveryItems;
+
+    @OneToMany(mappedBy = "delivery", cascade = CascadeType.ALL)
+    private Set<Product> deliveryItems = new HashSet<>();
+
     @Embedded
     private PriorityDelivery priorityDelivery;
+
     private String phone;
+
     private String description;
+
     private double totalPrice;
+
     @Embedded
     private OrderStatus status;
+
     private Integer statusId;
+
     private double distanceKm;
+
+    public Delivery() {}
 
     public Delivery(String phone, String description, int distanceKm, Address address) {
         this.phone = phone;
         this.address = address;
         this.description = description;
         this.distanceKm = distanceKm;
-        this.statusId = OrderStatus.StockConfirmation.id;
+        this.statusId = OrderStatus.stockConfirmation.id;
+        this.status = OrderStatus.stockConfirmation;
     }
 
     public Integer getId() {
@@ -47,12 +60,13 @@ public class Delivery {
         }
 
         deliveryItems.add(product);
+        product.setDelivery(this);
 
         calculateGoods();
     }
 
     public void setDeliveryPriority(boolean isDamageProne) {
-        priorityDelivery = isDamageProne ? PriorityDelivery.High : PriorityDelivery.Normal;
+        priorityDelivery = isDamageProne ? PriorityDelivery.high : PriorityDelivery.normal;
     }
 
     public void calculateGoods() {
@@ -63,6 +77,15 @@ public class Delivery {
         } else {
             totalPrice = 1.50 * distanceKm;
         }
+    }
+
+    public void updateDelivery(double newDistanceKm, String newDescription, String newPhone, PriorityDelivery priority, Address address) throws DomainException {
+        if (statusId == OrderStatus.confirmed.id) throw new DomainException("Impossível alterar uma ordem confirmada");
+
+        distanceKm = newDistanceKm;
+        description = newDescription;
+        phone = newPhone;
+        priorityDelivery = priority;
     }
 
     public Address getAddress() {
